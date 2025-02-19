@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=!, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            border: 2px solid black;
+            text-align: center;
+            width: 30%;
+            background-color: rgb(196, 191, 191);
+            border-radius: 20px;
+            margin: auto;
+            margin-top: 20%;
+        }
+    </style>
+    <script >
+        const apiKey ="8b718b4d2935b7625fe3a17cf8ced283";
+
+function getWeather(){
+    const city= document.getElementById("cityInput").value;
+    const weathershow = document.getElementById("p");
+    if(city===""){
+        weathershow.innerHTML="<p>Please Enter A City</p>";
+        return;
+    }
+
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+fetch(url)
+.then((response=>response.json()))
+.then((data)=>{
+    console.log(data);
+    if(data.cod==="404"){
+        weathershow.innerHTML="<p>city not found</p>";
+    }
+    else{
+        weathershow.innerHTML=`<h2>${data.name},${data.sys.country}</h2>
+        <p>Temparature:${data.main.temp}`;
+    }
+})
+
+.catch((error)=>{
+    weathershow.innerHTML="<p>Error</p>";
+
+});
+
+}
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <div class="input-container"></div>
+        <input type="text"placeholder="Enter the city name" id="cityInput">
+        <button onclick="getWeather()">Get Weather</button>
+        <div id="p" class="weather-details">
+            <!-- output -->
+            
+        </div>
+        <br> 
+        <br>
+    </div>
+</body>
+</html>
